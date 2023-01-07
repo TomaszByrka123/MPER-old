@@ -1,21 +1,14 @@
-void loop(/* arguments */) {
-  /* code */
-}
-voi(/* arguments */) {
-  /* code */
-}
-class klasa {
-private:
-  /* data */
+const int LED = 13;     // dioda LED jest dołączona do linii 13 zestawu
 
-public:
-  klasa (argumen ts);
-  virtual ~klasa ();
-};
-
-int name(/* arguments */) {
-  /* code */
-  return 0;
+void setup()            // funkcja konfigurująca
+{
+  pinMode(LED, OUTPUT); // ustawienie linii LED jako wyjściowej
 }
 
-int
+void loop()             // pętla nieskończona
+{
+  digitalWrite(LED, HIGH);  // ustawienie bitu
+  delay(1000);              // opóźnienie 1 s (1000 ms)
+  digitalWrite(LED, LOW);   // wyzerowanie bitu
+  delay(1000);              // opóźnienie 1 s (1000 ms)
+}
