@@ -1,4 +1,4 @@
-#biblioteka do obslugi komunikacji raspoberry pi ze strona przez MQTT
+# nasza biblioteka do obslugi komunikacji raspoberry pi ze strona przez MQTT
 import json
 import paho.mqtt.client as mqtt
 
