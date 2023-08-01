@@ -3,7 +3,7 @@ from flask import Flask, render_template, Response
 import paho.mqtt.client as mqtt
 import com
 
-#polaczenie z mqtt z com
+#polaczenie z mqtt z biblioteki com
 broker_address = "192.168.8.125"
 try:
     client = com.mqtt.Client()
