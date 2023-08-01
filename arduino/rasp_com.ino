@@ -7,17 +7,20 @@ void setup() {
   SPI.attachInterrupt();
 }
 
+byte odebrane_dane = 0;
+
 ISR (SPI_STC_vect) {
-  byte c = SPDR;
-  Serial.write("wyslalem");
-  SPDR = c + 10;
+  byte odebrane_dane = SPDR;
+  Serial.print("odebralem: ");
+  Serial.println(odebrane_dane);
+
+  //dane które chcemy wysłać przypisujemy do tej zmiennej 
+  SPDR = 10;
 }
 
 void loop () {
-  static unsigned long previousMillis = 0;
-  unsigned long currentMillis = millis();
-  if (currentMillis - previousMillis >= 1000) {
-    previousMillis = currentMillis;
-    SPDR = random(101); // Wysyłanie losowej liczby od 0 do 100
-  }
+
 }
+
+
+

@@ -1,0 +1,37 @@
+body {
+    margin: 0;
+    padding: 0;
+}
+
+#sidebar {
+    width: 200px;
+    height: 100vh;
+    background-color: #f2f2f2;
+    position: fixed;
+    left: 0;
+    top: 0;
+}
+
+#content {
+    margin-left: 200px;
+    padding: 20px;
+}
+
+ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+
+li {
+    padding: 10px;
+}
+
+li a {
+    text-decoration: none;
+    color: #333;
+}
+
+li a:hover {
+    color: #666;
+}

@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <title>Panel sterowania</title>
+    <link rel="stylesheet" type="text/css" href="../static/style.css" />
+    <meta charset="UTF-8">
+</head>
+<body>
+    <div id="sidebar">
+        <ul>
+            <li><a href="{{ url_for('index') }}">Strona główna (stan)</a></li>
+            <li><a href="{{ url_for('kamery') }}">Kamery</a></li>
+            <li><a href="{{ url_for('czujnik') }}">Czujniki</a></li>
+            <li><a href="{{ url_for('sterowanie') }}">Sterowanie</a></li>
+            <li><a href="{{ url_for('lokalizacja') }}">Lokalizacja i autonomia</a></li>
+            <li><a href="{{ url_for('ustawienia') }}">Ustawienia</a></li>
+        </ul>
+    </div>
+    <div id="content">
+      <h1>Ustawienia</h1>
+    </div>
+</body>
+</html>

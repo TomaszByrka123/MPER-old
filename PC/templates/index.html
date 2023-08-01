@@ -1,13 +1,55 @@
 <!DOCTYPE html>
-<html>
-  <head>
-    <title>Panel Sterowania</title>
-  </head>
-  <body>
-    <h1 id="header">0</h1>
+<html lang="pl">
+<head>
+    <title>Panel sterowania</title>
+    <link rel="stylesheet" type="text/css" href="../static/style.css" />
+    <meta charset="UTF-8">
+</head>
+<body>
+    <div id="sidebar">
+        <ul>
+            <li><a href="{{ url_for('index') }}">Strona główna (stan)</a></li>
+            <li><a href="{{ url_for('kamery') }}">Kamery</a></li>
+            <li><a href="{{ url_for('czujnik') }}">Czujniki</a></li>
+            <li><a href="{{ url_for('sterowanie') }}">Sterowanie</a></li>
+            <li><a href="{{ url_for('lokalizacja') }}">Lokalizacja i autonomia</a></li>
+            <li><a href="{{ url_for('ustawienia') }}">Ustawienia</a></li>
+        </ul>
+    </div>
+    <div id="content">
+      <img id="image" src="" alt="Obraz z serwera">
+      <script>
+          //odczytywanie obrazu z serwera przez websocket żeby nie trzeba było odświeżać strony przy każdej zmianie obrazu
+          function loadDoc() {
+              var xhttp = new XMLHttpRequest();
+              xhttp.onreadystatechange = function() {
+                if (this.readyState == 4 && this.status == 200) {
+                 document.getElementById("image").innerHTML = this.responseText;
+                }
+              };
+              xhttp.open("GET", "http://192.168.8.125/photos/obraz.jpg", true);
+              xhttp.send();
+            }
 
-    <script type="text/javascript">
+          loadDoc()
 
+
+          //prostsza wersja która nie działa tak dobrze
+          /*
+          var imageUrl = "http://192.168.8.125/photos/obraz.jpg";  // adres URL obrazu na serwerze
+
+          // Pobieranie obrazu z serwera
+          var image = document.getElementById("image");
+          image.src = imageUrl;
+          */
+      </script>
+
+
+
+      <br/>
+      <h1 id="header"></h1>
+      <script type="text/javascript">
+        //odebranie danych które umieścił flask na stream i wyświetlenie w header
         var source = new EventSource('/stream');
         var header = document.getElementById('header');
 
@@ -16,6 +58,8 @@
         };
 
     </script>
-  </body>
+    </div>
+</body>
 </html>
+
 
