@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Map App</title>
+    <title>mapa - testy</title>
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
     <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
 </head>
@@ -32,7 +32,7 @@
 
                 markersLayer.clearLayers();
                 L.marker(latlng).addTo(markersLayer)
-                    .bindPopup('Current Position: ' + data.lat + ', ' + data.lng)
+                    .bindPopup('position: ' + data.lat + ', ' + data.lng)
                     .openPopup();
 
                 map.panTo(latlng);
