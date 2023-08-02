@@ -1,0 +1,17 @@
+# biblioteki pythona
+venv/
+__pycache__/
+
+# usuwanie pycharma z githuba
+.idea/
+
+#wszytskie śmieci pythona
+*.pyc
+*.pyo
+__pycache__/
+*.py[cod]
+*.so
+*.egg
+*.egg-info/
+dist/
+build/
