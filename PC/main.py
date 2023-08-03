@@ -44,6 +44,9 @@ def sterowanie():
 def ustawienia():
     return render_template('ustawienia.html')
 
+@app.route('/science')
+def index():
+    return render_template('science.html')
 
 
 def data_from_raspberry():
