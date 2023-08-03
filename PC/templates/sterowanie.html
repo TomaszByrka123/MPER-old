@@ -4,6 +4,8 @@
     <title>Panel sterowania</title>
     <link rel="stylesheet" type="text/css" href="../static/style.css" />
     <meta charset="UTF-8">
+    <script src="https://cdn.jsdelivr.net/npm/nipplejs@0.10.1/dist/nipplejs.min.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
 <body>
     <div id="sidebar">
@@ -17,11 +19,31 @@
         </ul>
     </div>
     <div id="content">
-      <h1>Sterowanie</h1>
-        
+        <h1>Sterowanie</h1>
         <div id="joystick"></div>
-        
-        
+        <script>
+            const options = {
+              zone: document.getElementById('joystick'),
+              mode: 'static',
+              position: { left: '50%', top: '50%' },
+              color: 'blue',
+              size: 150
+            };
+          
+            const joystickManager = nipplejs.create(options);
+          
+            //kod do zbierania danych z joysticka
+            
+            /*
+            joystickManager.on('move', (evt, nipple) => {
+                let deltaX = nipple.frontPosition.x - options.position.left;
+                let deltaY = nipple.frontPosition.y - options.position.top;
+          
+                console.log('Delta X:', deltaX, 'Delta Y:', deltaY);
+            });
+            */
+           
+          </script>
     </div>
 </body>
 </html>
