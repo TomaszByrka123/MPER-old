@@ -46,7 +46,7 @@ def ustawienia():
 
 
 
-def generate_numbers():
+def data_from_raspberry():
     count = com.get_last_value()
     while True:
         count = com.get_last_value()
@@ -57,7 +57,7 @@ def generate_numbers():
 #publikowanie na /stream danych [0] z tabeli z raspberry pi
 @app.route('/stream')
 def stream():
-    return Response(generate_numbers(), mimetype='text/event-stream')
+    return Response(data_from_raspberry(), mimetype='text/event-stream')
 
 if __name__ == '__main__':
     app.run(debug=True)
