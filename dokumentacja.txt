@@ -4,3 +4,6 @@ ustawienie automatycznego uruchamiania po uruchomieniu raspberry: sudo systemctl
 
 kamery osobno przez http (apache):
 uruchomienie serwera apache: sudo apache start
+
+uruchomienie głównego programu na pc: python main.py
+

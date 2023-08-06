@@ -1,6 +1,8 @@
 import time
 from flask import Flask, render_template, Response
+from flask_socketio import SocketIO
 import paho.mqtt.client as mqtt
+
 import com
 
 #polaczenie z mqtt z biblioteki com
@@ -15,10 +17,12 @@ try:
 except:
     print("bład przy łączeniu z raspberry pi")
 
-app = Flask(__name__)
 
 
 #Stworzenie stron wszystkich zakładek
+
+app = Flask(__name__)
+socketio = SocketIO(app)
 
 @app.route('/')
 def index():
@@ -45,7 +49,7 @@ def ustawienia():
     return render_template('ustawienia.html')
 
 @app.route('/science')
-def index():
+def science():
     return render_template('science.html')
 
 
@@ -61,6 +65,8 @@ def data_from_raspberry():
 @app.route('/stream')
 def stream():
     return Response(data_from_raspberry(), mimetype='text/event-stream')
+
+
 
 if __name__ == '__main__':
     app.run(debug=True)
