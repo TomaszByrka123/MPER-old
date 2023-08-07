@@ -7,6 +7,8 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600&display=swap" rel="stylesheet">
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.7.2/socket.io.js" integrity="sha512-zoJXRvW2gC8Z0Xo3lBbao5+AS3g6YWr5ztKqaicua11xHo+AvE1b0lT9ODgrHTmNUxeCw0Ry4BGRYZfXu70weg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 </head>
 <body>
     <div id="sidebar-left" class="sidebar">
@@ -26,8 +28,26 @@
     </div>
 
     <div id="sidebar-right" class="sidebar">
-        <div class="sidebar-header">BATTERY 98% <br> CONNECTION <img src="../static/icons/yes.png" class="connection-icon"/></div>
-        <div><a>komunikat</a></div>
+        <div class="sidebar-header">BATTERY 98% <br> CONNECTION <img src="../static/icons/delete.png" id="connection-icon"/></div>
+        <div id="info_element"></div>
+        <script>
+            const socket = io.connect('http://127.0.0.1:5000/');
+    
+            socket.on('message', (data) => {
+                console.log('Odebralem: ', data);
+                var info_element = document.getElementById('info_element');
+                const connection_icon = document.getElementById('connection-icon');
+                if (data == '1') {
+                    console.log("zmieniam obrazek");
+                    connection_icon.setAttribute("src", "../static/icons/yes.png");
+                }
+                info_element.innerHTML = data;
+            });
+    
+            socket.emit('message', 'wiadomosc od przegladarki');
+            
+    
+          </script>
         <div class="sidebar-footer"><button class="off"><img src="../static/icons/power-on.png" class="off-image"/></button></div>
     </div>
 </body>

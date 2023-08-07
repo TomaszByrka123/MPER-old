@@ -1,3 +1,26 @@
+import asyncio
+import websockets
+
+# Przykładowe dane w postaci tablicy
+data = [1, 2, 3, 4, 5]
+
+async def send_data(websocket, path):
+    while True:
+        #wysylanie danych co 1s
+        await websocket.send(','.join(map(str, data)))
+        await asyncio.sleep(1)
+
+#start serwera
+start_server = websockets.serve(send_data, "0.0.0.0", 8765)
+
+#petla glowna
+asyncio.get_event_loop().run_until_complete(start_server)
+asyncio.get_event_loop().run_forever()
+
+
+
+#KOD WYKORZYSTUJĄCY MQTT DO KOMUNIKACJI, TERAZ UŻYWAMY WEBSOCKET PONIEWAZ JEST SZYBSZY
+"""
 import time
 import random
 import json
@@ -33,6 +56,6 @@ while True:
     print("Wysłano dane:", data)
     time.sleep(1)
 
-
 client.loop_stop()
 client.disconnect()
+"""
