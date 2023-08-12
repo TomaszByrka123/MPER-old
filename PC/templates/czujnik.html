@@ -18,19 +18,33 @@
 
         const url = 'ws://192.168.8.125:8765'; // ADRES RASPBERRY
         const ws = new WebSocket(url);
-    
+
         ws.addEventListener('open', () => {
-            console.log('polaczono z raspberry');
+            console.log('Połączono z Raspberry');
         });
-    
+
         ws.addEventListener('message', (event) => {
-            const dataArr = event.data.split(',').map(Number);
-            console.log('Odebrano dane:', dataArr);
+            console.log('Odpowiedź od Raspberry:', event.data);
         });
-    
+
         ws.addEventListener('close', () => {
-            console.log('odlaczono od raspberry');
+            console.log('Rozłączono z Raspberry');
         });
+
+        function sendToRaspberry(data) {
+            if (ws.readyState === WebSocket.OPEN) {
+                ws.send(data.join(','));
+                console.log('Wysłano dane:', data);
+            } else {
+                console.log('Nie można wysłać danych. Połączenie zamknięte.');
+            }
+        }
+        // Przykładowe dane do wysłania
+        const dataToSend = [6, 7, 8, 9, 10];
+        setInterval(() => {
+            sendToRaspberry(dataToSend);
+        }, 1000);
+
     </script>
 
 
