@@ -1,41 +1,46 @@
-#biblioteka do obslugi komunikacji raspoberry pi ze strona przez MQTT
-import json
-import paho.mqtt.client as mqtt
+#biblioteka do obslugi komunikacji raspoberry pi ze strona przez WebSocket
+import asyncio
+import websockets
 
-broker_address = "192.168.8.125" #adres maliny bo na niej jest broker
+async def handle_connection(websocket, path):
+    try:
+        while True:
+            # Odbieranie wiadomości od klienta
+            message = await websocket.recv()
+            print(f"otrzymano wiadomosc: {message}")
 
-last_value = None  #ostatnia odczytana wartosc
+            # Odpowiedź do klienta
+            response = f"otrzymano wiadomosc: {message}"
+            await websocket.send(response)
+            print(f"wyslano: {response}")
 
-def on_connect(client, userdata, flags, rc):
-    print("polaczono z MQTT - " + str(rc))
-    client.subscribe("topic/dane")  # Temat: dane
+    except websockets.exceptions.ConnectionClosed:
+        print("koniec polaczenia")
 
-def on_message(client, userdata, msg):
-    global last_value
-    payload = json.loads(msg.payload.decode()) #odczyt danych
-    last_value = payload
-    #print("Odebrano dane:", payload)
+start_server = websockets.serve(handle_connection, "localhost", 8765)
 
-def get_last_value():
-    return last_value  #wyjsciowa funkcja
+# Rozpoczęcie pętli głównej
+async def main():
+    await start_server
+    print("polaczono z raspberry ws://localhost:8765")
+    await asyncio.Event().wait() 
 
-def send_data(client, data):
-    payload = json.dumps(data)
-    client.publish("topic/pc", payload)
-    print("wyslano dane: ", data)
-
-
-
-
-#PRZYKLAD UZYCIA
-"""
-client = mqtt.Client()
-client.on_connect = on_connect
-client.on_message = on_message
-
-client.connect(broker_address, 1883, 60)
-client.loop_start()
-
-"""
+# Uruchomienie pętli głównej
+asyncio.run(main())
 
 
+
+#----------------------wysylanie------------------------------
+import asyncio
+import websockets
+
+async def send_message():
+    async with websockets.connect("ws://localhost:8765") as websocket:
+        message = "wiadomosc"
+        await websocket.send(message)
+        print(f"wyslano wiadomosc do raspberry: {message}")
+
+async def main():
+    await send_message()
+
+asyncio.run(main())

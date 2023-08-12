@@ -1,34 +1,53 @@
-<!DOCTYPE html>
-<html lang="pl">
-<head>
-    <title>Panel sterowania</title>
-    <link rel="stylesheet" type="text/css" href="../static/style.css" />
-    <meta charset="UTF-8">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600&display=swap" rel="stylesheet">
-</head>
-<body>
-    <div id="sidebar-left" class="sidebar">
-        <ul>
-            <a href="{{ url_for('index') }}"><li><img src="../static/icons/home.png" class="icons"/><span class="sidebar-text">Main</span></li></a>
-            <a href="{{ url_for('sterowanie') }}"><li><img src="../static/icons/robotic-arm.png" class="icons"/><span class="sidebar-text">Sterowanie</span></li></a>
-            <a href="{{ url_for('lokalizacja') }}"><li><img src="../static/icons/map.png" class="icons"/><span class="sidebar-text">Mapa i autonomia</span></li></a>
-            <a href="{{ url_for('czujnik') }}"><li><img src="../static/icons/search.png" class="icons"/><span class="sidebar-text">Czujniki</span></li></a>
-            <a href="{{ url_for('kamery') }}"><li><img src="../static/icons/video-camera.png" class="icons"/><span class="sidebar-text">Kamery</span></li></a>
-            <a href="{{ url_for('science') }}"><li><img src="../static/icons/atom.png" class="icons"/><span class="sidebar-text">Science</span></li></a>
-            <a href="{{ url_for('ustawienia') }}"><li><img src="../static/icons/settings.png" class="icons"/><span class="sidebar-text">Ustawienia</span></li></a>
-        </ul>
-    </div>
+{% extends "base.html" %}
+{% block content %}
+    <head>
+        <title>Panel sterowania</title>
+        <link rel="stylesheet" type="text/css" href="../static/style.css" />
+        <meta charset="UTF-8">
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600&display=swap" rel="stylesheet">
+    </head>
 
-    <div id="content">
-      <h1>Lokalizacja</h1>
-    </div>
+    <h1>Lokalizacja</h1>
 
-    <div id="sidebar-right" class="sidebar">
-        <div class="sidebar-header">BATTERY 98% <br> CONNECTION <img src="../static/icons/yes.png" class="connection-icon"/></div>
-        <div><a>komunikat</a></div>
-        <div class="sidebar-footer"><button class="off"><img src="../static/icons/power-on.png" class="off-image"/></button></div>
-    </div>
-</body>
-</html>
+    <div id="map" style="height: 400px;"></div>
+
+    <script>
+        //przykladowy kod do stworzenia mapy i zaznaczania na niej strasy łazika uzywajac flaska
+        //trzeba go przerobic tak aby dane z gps (z rapsberry) odbieral sam js bo teraz komunikujemy sie przez websocket
+        var map = L.map('map').setView([51.5074, -0.1278], 13);
+        var markersLayer = L.layerGroup().addTo(map);
+        var lineLayer = L.layerGroup().addTo(map);
+
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '&copy; OpenStreetMap contributors'
+        }).addTo(map);
+
+        var historyPoints = [];
+
+        function updateMarker() {
+            fetch('/get_position')
+            .then(response => response.json())
+            .then(data => {
+                var latlng = L.latLng(data.lat, data.lng);
+                historyPoints.push(latlng);
+
+                if (historyPoints.length > 1) {
+                    L.polyline(historyPoints, { color: 'blue' }).addTo(lineLayer);
+                }
+
+                markersLayer.clearLayers();
+                L.marker(latlng).addTo(markersLayer)
+                    .bindPopup('position: ' + data.lat + ', ' + data.lng)
+                    .openPopup();
+
+                map.panTo(latlng);
+            });
+        }
+
+        setInterval(updateMarker, 1000);
+    </script>
+
+    
+{% endblock %}
