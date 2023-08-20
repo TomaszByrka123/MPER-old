@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>mapa - testy (do usuniecia)</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+</head>
+<body>
+    <div id="map" style="height: 400px;"></div>
+
+    <script>
+        var map = L.map('map').setView([51.5074, -0.1278], 13);
+        var markersLayer = L.layerGroup().addTo(map);
+        var lineLayer = L.layerGroup().addTo(map);
+
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '&copy; OpenStreetMap contributors'
+        }).addTo(map);
+
+        var historyPoints = [];
+
+        function updateMarker() {
+            fetch('/get_position')
+            .then(response => response.json())
+            .then(data => {
+                var latlng = L.latLng(data.lat, data.lng);
+                historyPoints.push(latlng);
+
+                if (historyPoints.length > 1) {
+                    L.polyline(historyPoints, { color: 'blue' }).addTo(lineLayer);
+                }
+
+                markersLayer.clearLayers();
+                L.marker(latlng).addTo(markersLayer)
+                    .bindPopup('position: ' + data.lat + ', ' + data.lng)
+                    .openPopup();
+
+                map.panTo(latlng);
+            });
+        }
+
+        setInterval(updateMarker, 1000);
+    </script>
+</body>
+</html>
