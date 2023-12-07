@@ -1,24 +1,12 @@
 from flask import Flask, render_template, request, jsonify
-import asyncio 
+from flask_socketio import SocketIO, emit
+import time
 
-import arduino
-
-
-stara_tablica = [3, 2, 1]
-tablica_do_wyslania = [1, 2, 3]
-
-#połączenie z arduino (SPI)
-spi = arduino.start_com()
-
-async def arduino_com():
-    while True:
-        dane_z_arduino = arduino.send_data_respond(spi, 2)
-        print("dane z arduino: ", dane_z_arduino)
-        await asyncio.sleep(1)
+#import arduino
 
 
 app = Flask(__name__)
-
+socketio = SocketIO(app)
 
 #ZAKŁADKI
 @app.route('/')
@@ -50,30 +38,12 @@ def science():
     return render_template('science.html')
 
 
-#FUNKCJE    
+@socketio.on('joystick')
+def handle_message(message):
+    go(message)
 
-#zapis danych
-@app.route('/zapisz_do_tablicy', methods=['POST'])
-def zapisz_do_tablicy():
-    data = request.json
-    if data and 'indeks' in data and 'wartosc' in data:
-        indeks = data['indeks']
-        wartosc = data['wartosc']
-        tablica_do_wyslania[indeks] = wartosc
-        return jsonify({'message': 'Wartość zaktualizowana'})
-    return jsonify({'error': 'Nieprawidłowe dane'})
-
-#odczyt danych
-@app.route('/odczytaj_z_tablicy', methods=['POST'])
-def odczytaj_z_tablicy():
-    data = request.json
-    if data and 'indeks' in data:
-        indeks = data['indeks']
-        return jsonify({'message': tablica_do_wyslania[indeks]})
-    return jsonify({'error': 'Nieprawidłowe dane'})
 
 
 if __name__ == '__main__':
-    asyncio.ensure_future(arduino_com())
-    app.run(host='0.0.0.0', port=80)
+    app.run(host='0.0.0.0', port=80, debug=True)
 
