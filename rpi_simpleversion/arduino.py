@@ -1,10 +1,8 @@
 #OBSŁUGA KOMUNIKACJI Z ARDUINO PRZEZ UART
 
-#!/usr/bin/env python3
 import serial
 import threading
 import time
-
 
 class Arduino:
     def __init__(self, serial_port):
@@ -19,7 +17,7 @@ class Arduino:
     def get_data(self):
         while self.is_running:
             if self.arduino.in_waiting > 0:
-                line = self.arduino.readline().decode('utf-8').rstrip()
+                line = self.arduino.readline().decode().rstrip()
                 if self.callback:
                     self.callback(line)
 
@@ -43,10 +41,10 @@ class Arduino:
 
     def send_data(self, data):
         try:
-            for number in data:
-                self.arduino.write(str(number).encode('utf-8'))
-                print(f"Wysłano do Arduino: {data}")
-                time.sleep(0.1)
+            self.data_str = ','.join(map(str, data)) + '\n'
+            self.arduino.write(self.data_str.encode())
+            print(f"Wysłano do Arduino: {data}")
+            time.sleep(0.1)
         except Exception as e:
             print(f"Błąd wysyłania danych: {str(e)}")
 
@@ -56,11 +54,12 @@ class Arduino:
             self.arduino.close()
 
 
-
+"""
 #uzycie:
 
 def on_detction(data):
     print("detect: ", data)
+
 
 try:
     podwozie = Arduino('/dev/ttyACM0')
@@ -69,14 +68,14 @@ try:
     while True:
         input_str = input("Podaj x i y: ")
         numbers = input_str.split()
+
         x = int(numbers[0])
         y = int(numbers[1])
-        print("x: ", x, "y: ", y)
-        podwozie.send_data([100, 100])
-        time.sleep(3)
+        
+        podwozie.send_data([x, y])
 except:
     print("nie udalo się połączyć z arduino")
-
+"""
 
 
 

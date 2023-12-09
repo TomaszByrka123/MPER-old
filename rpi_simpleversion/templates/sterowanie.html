@@ -5,90 +5,19 @@
         <title>Panel sterowania</title>
         <link rel="stylesheet" type="text/css" href="../static/style.css" />
         <meta charset="UTF-8">
-        <script src="https://cdn.jsdelivr.net/npm/nipplejs@0.10.1/dist/nipplejs.min.js"></script>
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600&display=swap" rel="stylesheet">
+
+        <script src="{{ url_for('static', filename='scripts/nipplejs.min.js') }}"></script>
+        <script src="{{ url_for('static', filename='scripts/socket.io.js') }}" ></script>
     </head>
 
     <div id="joystick-container">
         <div id="joystick"></div>
     </div>
-    <script>
 
-        const place = document.getElementById('joystick-container');
-        const options = {
-            zone: place,
-            mode: 'static',
-            position: { left: '50%', top: '50%' },
-            color: 'blue',
-            size: 150
-        };
-    
-        const joystick = nipplejs.create(options);
-    
-
-        joystick.on('move', (event, data) => {
-            const angleRadians = data.angle.radian;
-            const angleDegrees = ((angleRadians * 180) / Math.PI).toFixed();
-            let force = data.force;
-
-            //ALGORYTM DO ZAMIANY DANYCH Z JOYSTICKA NA MOC SILNIKOW W ŁAZIKU (TE DANE MOGĄ ZOSTAĆ JUŻ PRZESŁANE DO RASPBERRY A POTEM DO ARDUINO)
-            var prawy = 100; 
-            var lewy = 100;
-
-            //skret w prawo
-            if (angleDegrees <= 15 || angleDegrees >= 345) {
-                prawy = -100;
-                lewy = 100;
-            } 
-            //skret w lewo
-            else if (angleDegrees <= 195 && angleDegrees >= 165) {   
-                prawo = 100;
-                lewy = -100;
-            } 
-            //jazda do przodu
-            else if (angleDegrees >= 15 && angleDegrees <= 165) {
-                roznica = 90 - angleDegrees;
-                if (roznica < 0) {
-                    //lewo
-                    lewy = lewy + (roznica * 100) / 75;
-                } else {
-                    //prawo
-                    prawy = prawy - (roznica * 100) / 75;
-                }
-            } 
-            //jazda do tylu
-            else {
-                roznica = 270 - angleDegrees;
-                if (roznica > 0){
-                    //lewo
-                    lewy = lewy - (roznica * 100) / 75;
-                    lewy = lewy * -1;
-                    prawy = prawy * -1;
-                } else {
-                    //prawo
-                    prawy = prawy + (roznica * 100) / 75;
-                    lewy = lewy * -1;
-                    prawy = prawy * -1;
-                }
-            }
-
-            if (force > 2) {
-                force = 2;
-            }
-
-            console.log(" lewy: ", (lewy * force / 2).toFixed(0), "prawy: ", (prawy * force / 2).toFixed(0),);
-        });
-
-
-
-        joystick.on('end', () => {
-            console.log('Joystick Released');
-        });
-    
-    </script>
-
+    <script src="{{ url_for('static', filename='scripts/main.js') }}"></script>
 
 {% endblock %}

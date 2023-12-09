@@ -1,9 +1,11 @@
+#!/venv/bin/python
 from flask import Flask, render_template, request, jsonify
 from flask_socketio import SocketIO, emit
 import time
 
-#import arduino
+from arduino import Arduino
 
+podwozie = Arduino('/dev/ttyACM0')
 
 app = Flask(__name__)
 socketio = SocketIO(app)
@@ -39,11 +41,11 @@ def science():
 
 
 @socketio.on('joystick')
-def handle_message(message):
-    go(message)
-
+def handle_message(data):
+    podwozie.send_data([data['left'], data['right']])
+    #print(f'left: {data["left"]}, right: {data["right"]}')
 
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=80, debug=True)
+    socketio.run(app, port=5000, debug=True, host='0.0.0.0')
 
