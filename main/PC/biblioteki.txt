@@ -1,2 +1,0 @@
-pip install: flask, paho-mqtt, flask-socketio, eventlet
-npm install: nipplejs

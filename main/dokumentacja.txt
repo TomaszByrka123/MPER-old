@@ -1,9 +1,0 @@
-raspberry pi:
-uruchomienie brokera mqtt: sudo systemctl start mosquitto 
-ustawienie automatycznego uruchamiania po uruchomieniu raspberry: sudo systemctl enable mosquitto
-
-kamery osobno przez http (apache):
-uruchomienie serwera apache: sudo apache start
-
-uruchomienie głównego programu na pc: python main.py
-
