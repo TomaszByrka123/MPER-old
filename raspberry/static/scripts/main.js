@@ -69,6 +69,9 @@ joystick.on('move', (event, data) => {
         force = 2;
     }
 
+    prawy+=100;
+    lewy+=100;
+
     angle_left = (lewy * force / 2).toFixed(0);
     angle_right = (prawy * force / 2).toFixed(0);
     //console.log(" lewy: ", angle_left, "prawy: ", angle_right);
