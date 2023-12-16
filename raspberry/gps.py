@@ -5,9 +5,9 @@ import adafruit_gps
 
 
 class gps:
-    def __init__:
+    def __init__():
         pass
-    def get_position:
+    def get_position():
         pass
 
 TX_PIN = 8
