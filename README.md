@@ -3,11 +3,11 @@ Usage
 
 Clone repository:
 
-    git clone https://github.com/TomaszByrka123/lazik-szkola
+    git clone https://github.com/TomaszByrka123/MPR
 
 Creating virtual environment:
 
-    cd lazik-szkola/raspberry/
+    cd MPR/raspberry/
     python3 -m venv venv
 
 Activate virtual environment:
