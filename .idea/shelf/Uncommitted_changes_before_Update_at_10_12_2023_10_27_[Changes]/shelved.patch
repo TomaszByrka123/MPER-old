@@ -1,0 +1,19 @@
+Index: rpi_simpleversion/requirement.txt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/rpi_simpleversion/requirement.txt b/.gitignore
+rename from rpi_simpleversion/requirement.txt
+rename to .gitignore
+--- a/rpi_simpleversion/requirement.txt	
++++ b/.gitignore	
+@@ -1,0 +1,8 @@
++# Pliki i foldery generowane przez Python
++__pycache__/
++*.pyc
++*.pyo
++*.pyd
++
++# Virtual environment
++venv/

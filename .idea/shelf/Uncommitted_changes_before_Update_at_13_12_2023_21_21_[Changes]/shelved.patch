@@ -1,0 +1,19 @@
+Index: .gitignore
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+># Pliki i foldery generowane przez Python\r\n__pycache__/\r\n*.pyc\r\n*.pyo\r\n*.pyd\r\n\r\n# Virtual environment\r\nvenv/\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.gitignore b/.gitignore
+--- a/.gitignore	(revision cec190eb5fde7f3962d05bf1eec28dd7decf33ed)
++++ b/.gitignore	(date 1702200890401)
+@@ -1,8 +1,3 @@
+ # Pliki i foldery generowane przez Python
+ __pycache__/
+-*.pyc
+-*.pyo
+-*.pyd
+-
+-# Virtual environment
+ venv/

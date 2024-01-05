@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="f50a3798-a289-443a-83db-e386d0077c51" name="Changes" comment="name change" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="main" />
+      </map>
+    </option>
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
+  <component name="ProjectId" id="2ZB38INuSd20Ufz0TVi3jlE40yN" />
+  <component name="ProjectLevelVcsManager">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "WebServerToolWindowFactoryState": "true",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "vue.rearranger.settings.migration": "true"
+  }
+}]]></component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="f50a3798-a289-443a-83db-e386d0077c51" name="Changes" comment="" />
+      <created>1701881483364</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1701881483364</updated>
+      <workItem from="1701881485286" duration="105000" />
+      <workItem from="1701881600734" duration="4000" />
+      <workItem from="1701881613727" duration="1217000" />
+      <workItem from="1701890849084" duration="7077000" />
+      <workItem from="1702498862034" duration="97000" />
+      <workItem from="1703410217666" duration="80000" />
+      <workItem from="1703410308620" duration="8000" />
+      <workItem from="1703425545977" duration="118000" />
+      <workItem from="1703451536194" duration="17000" />
+      <workItem from="1703451560303" duration="639000" />
+      <workItem from="1703507491665" duration="187000" />
+      <workItem from="1703507711510" duration="2000" />
+      <workItem from="1704471126563" duration="105000" />
+    </task>
+    <task id="LOCAL-00001" summary="send data">
+      <option name="closed" value="true" />
+      <created>1701890947781</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1701890947781</updated>
+    </task>
+    <task id="LOCAL-00002" summary="Arduino Class">
+      <option name="closed" value="true" />
+      <created>1701894709461</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1701894709461</updated>
+    </task>
+    <task id="LOCAL-00003" summary="Arduino Class">
+      <option name="closed" value="true" />
+      <created>1701932925982</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1701932925982</updated>
+    </task>
+    <task id="LOCAL-00004" summary="name change">
+      <option name="closed" value="true" />
+      <created>1702200616463</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1702200616463</updated>
+    </task>
+    <task id="LOCAL-00005" summary="name change">
+      <option name="closed" value="true" />
+      <created>1703425612972</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1703425612972</updated>
+    </task>
+    <task id="LOCAL-00006" summary="name change">
+      <option name="closed" value="true" />
+      <created>1704471168763</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1704471168763</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="send data" />
+    <MESSAGE value="Arduino Class" />
+    <MESSAGE value="name change" />
+    <option name="LAST_COMMIT_MESSAGE" value="name change" />
+  </component>
+  <component name="com.intellij.coverage.CoverageDataManagerImpl">
+    <SUITE FILE_PATH="coverage/lazik_szkola$main.coverage" NAME="main Coverage Results" MODIFIED="1703507535186" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/raspberry" />
+  </component>
+</project>
