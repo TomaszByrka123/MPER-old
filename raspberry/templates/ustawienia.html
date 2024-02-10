@@ -8,10 +8,142 @@
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600&display=swap" rel="stylesheet">
+        <script src="{{ url_for('static', filename='scripts/socket.io.js') }}" ></script>
     </head>
 
     <div id="content">
-        <h1>Ustawienia</h1>
+        <div style="margin-top: 30px;">
+            <label class="switch" style="display: inline-block; margin-right: 20px; vertical-align: middle;">
+                <input type="checkbox" checked>
+                <span class="slider red"></span>
+            </label>
+            <h3 style="display: inline-block; margin-top: 20px; vertical-align: middle;">Oświetlenie przednie </h3>
+        </div>
+        
+        <div>
+            <label class="switch" style="display: inline-block; margin-right: 20px; vertical-align: middle;">
+                <input type="checkbox" checked>
+                <span class="slider red"></span>
+            </label>
+            <h3 style="display: inline-block; margin-top: 20px; vertical-align: middle;">Oświetlenie dolne </h3>
+        </div>
+        
+        <div>
+            <label class="switch" style="display: inline-block; margin-right: 20px; vertical-align: middle;">
+                <input type="checkbox" checked>
+                <span class="slider red"></span>
+            </label>
+            <h3 style="display: inline-block; margin-top: 20px; vertical-align: middle;">Oświetlenie tylne </h3>
+        </div>
+        
+        <script>
+            var socket = io.connect('http://' + document.domain + ':' + location.port);
+            var actualSettings = [0, 0, 0];
+
+            document.addEventListener("DOMContentLoaded", function() {
+                // Obsługa otrzymania aktualnych ustawień od serwera
+                socket.on('settings', function(data) {
+                    console.log("Received settings:", data);
+                    actualSettings = data;
+                    updateCheckboxes(data);
+                });
+        
+                // Wysyłanie zmian stanu checkboxów do serwera
+                document.querySelectorAll('input[type="checkbox"]').forEach((checkbox, index) => {
+                    checkbox.addEventListener('change', () => {
+                        const state = checkbox.checked ? 1 : 0;
+                        actualSettings[index] = state;
+                        socket.emit('settings', actualSettings);
+                    });
+                });
+        
+                // Funkcja aktualizująca stany checkboxów na podstawie otrzymanych danych
+                function updateCheckboxes(data) {
+                    var checkboxes = document.querySelectorAll('.switch input[type="checkbox"]');
+                    checkboxes.forEach(function(checkbox, index) {
+                        checkbox.checked = data[index] === 1;
+                    });
+                }
+        
+                // Na samym początku pobierz aktualne ustawienia
+                socket.emit('settings');
+            });
+        </script>
+        
+        
+        
+        <style>
+            /* Stylowanie kontenera przełącznika */
+            .switch {
+                position: relative;
+                display: inline-block;
+                width: 60px;
+                height: 34px;
+            }
+            
+            /* Stylowanie tła przełącznika */
+            .switch input {
+                opacity: 0;
+                width: 0;
+                height: 0;
+            }
+            
+            /* Stylowanie włączonego tła przełącznika */
+            .slider {
+                position: absolute;
+                cursor: pointer;
+                top: 0;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                background-color: #ccc;
+                transition: .4s;
+                border-radius: 34px;
+            }
+            
+            /* Stylowanie kółka przesuwającego się po włączeniu przełącznika */
+            .slider:before {
+                position: absolute;
+                content: "";
+                height: 26px;
+                width: 26px;
+                left: 4px;
+                bottom: 4px;
+                background-color: white;
+                transition: .4s;
+                border-radius: 50%;
+            }
+            
+            /* Stylowanie włączonego tła przełącznika */
+            input:checked + .slider {
+                background-color: #2196F3;
+            }
+            
+            /* Stylowanie kółka przesuwającego się po włączeniu przełącznika */
+            input:checked + .slider:before {
+                transform: translateX(26px);
+            }
+            
+            /* Stylowanie tła przełącznika na zielono, gdy jest włączony */
+            .slider.green {
+                background-color: #4CAF50;
+            }
+            
+            /* Stylowanie kółka przesuwającego się po włączeniu przełącznika */
+            .slider.green:before {
+                background-color: white;
+            }
+            
+            /* Stylowanie tła przełącznika na czerwono, gdy jest włączony */
+            .slider.red {
+                background-color: #F44336;
+            }
+            
+            /* Stylowanie kółka przesuwającego się po włączeniu przełącznika */
+            .slider.red:before {
+                background-color: white;
+            }
+        </style>
     </div>
 
 {% endblock %}

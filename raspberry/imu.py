@@ -1,5 +1,5 @@
 class imu:
-    def __init__:
+    def __init__(self):
         pass
-    def get_position:
+    def get_position(self):
         pass

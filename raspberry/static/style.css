@@ -3,10 +3,11 @@ body {
     padding: 0;
     display: flex;
     justify-content: space-between;
-    align-items: center;
+    
     height: 100vh;
     font-family: 'Poppins', sans-serif;
 }
+/*align-items: center;*/
 
 .sidebar {
     width: 260px;
@@ -20,6 +21,7 @@ body {
 
 #sidebar-left {
     left: 0;
+    border-radius: 10px;
 }
 
 #sidebar-right {
@@ -72,6 +74,7 @@ li:hover {
     padding: 10px;
     background-color: #ccc;
     text-align: center;
+    border-radius: 10px;
 }
 
 .icons {
@@ -111,3 +114,94 @@ li:hover {
     width: 800px;
     height: 400px;
 }
+
+.message-list {
+    max-height: 100%; /* maksymalna wysokość */
+    overflow-y: auto; /* przewijanie pionowe */
+    margin-bottom: 10px; /* margines na dole listy */
+    padding: 0;
+}
+
+.message-list-item {
+    padding: 5px 0;
+    border-bottom: 1px solid #ccc;
+    margin-left: 14px;
+}
+
+.tablink {
+    font-family: 'Poppins', sans-serif;
+    margin-top: 14px;
+    background-color:antiquewhite;
+    font-size: 20px;
+    border-radius: 8px;
+    padding: 10px;
+    border-width: 1px;
+    border-color: azure;
+    border-style: solid;
+    cursor: pointer;
+}
+
+.tablink:hover {
+    background-color:coral;
+}
+
+.tablink:active, .tablink.active {
+    background-color:chocolate;
+}
+
+.gripper-button {
+    font-family: 'Poppins', sans-serif;
+    margin-top: 14px;
+    background-color:antiquewhite;
+    font-size: 20px;
+    border-radius: 8px;
+    padding: 10px;
+    border-width: 1px;
+    border-color: azure;
+    border-style: solid;
+    cursor: pointer;
+}
+.gripper-button:hover {
+    background-color: lightgray;
+}
+.gripper-button.clicked {
+    background-color: sandybrown;
+}
+
+.arrow-icons {
+    width: 40px;
+    height: 40px;
+    vertical-align: middle;
+}
+
+
+
+
+.crush-button {
+    font-family: 'Poppins', sans-serif;
+    margin-top: 14px;
+    background-color:rgb(107, 94, 196);
+    font-size: 20px;
+    border-radius: 8px;
+    padding: 10px;
+    border-width: 1px;
+    border-color: azure;
+    border-style: solid;
+    cursor: pointer;
+}
+.crush-button:hover {
+    background-color: rgb(160, 147, 240);
+}
+.crush-button.clicked {
+    background-color: sandybrown;
+}
+
+.crush-icons {
+    width: 40px;
+    height: 40px;
+    vertical-align: middle;
+}
+
+
+
+

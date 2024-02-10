@@ -14,10 +14,86 @@
         <script src="{{ url_for('static', filename='scripts/socket.io.js') }}" ></script>
     </head>
 
-    <div id="joystick-container">
-        <div id="joystick"></div>
+    <div id="content">
+        <div style="text-align: center;">
+            <button class="tablink" onclick="openPage('Podwozie', this)"  id="defaultOpen">Podwozie</button>
+            <button class="tablink" onclick="openPage('Manipulator', this)">Manipulator</button>
+        </div>
+
+        <div id="Podwozie" class="tabcontent">
+            <div>
+                <img id="image" src="http://192.1.1.104:8000/stream.mjpg" alt="Uruchom program camera_pi.py w nowym terminalu aby otrzymac obraz z kamery" style="margin-top: 40px;"><br/>
+                <div id="joystick-podwozie-container">
+                    <div id="joystick"></div>
+                </div>
+            </div>
+        </div>
+        
+        <div id="Manipulator" class="tabcontent">
+            <div style="top: 0; position: fixed; left: 50%; transform: translateX(-50%); margin-top: 10%;">
+                <button id="leftCrush" class="crush-button"><img src="../static/icons/minimise.png" class="crush-icons" loading="lazy"/></button>
+                <button id="rightCrush" class="crush-button"><img src="../static/icons/maximize.png" class="crush-icons" loading="lazy"/></button>
+            </div>
+
+            <div id="joystick-manipulator-A-container">
+                <div id="joystick"></div>
+            </div>
+
+            <div id="joystick-manipulator-B-container">
+                <div id="joystick"></div>
+            </div>
+
+            <div style="bottom: 0; position: fixed; left: 50%; transform: translateX(-50%); margin-bottom: 10%;">
+                <button id="leftBtn" class="gripper-button"><img src="../static/icons/back.png" class="arrow-icons" loading="lazy"/></button>
+                <button id="rightBtn" class="gripper-button"><img src="../static/icons/next.png" class="arrow-icons" loading="lazy"/></button>
+            </div>
+        </div>
+        <h3 style="bottom: 0; position: fixed; left: 50%; transform: translateX(-50%);">Jeżeli występuje bład w działaniu joysticków naciśni 2 razy F12</h3>
     </div>
 
-    <script src="{{ url_for('static', filename='scripts/main.js') }}"></script>
+    <script>
+        //zatrzymanie pobierania obrazu po 1s
+        var image = document.getElementById("image");
+        var imageLoaded = false;
+        function stopImageLoading() {
+            if (!imageLoaded) {
+                image.src = ""; 
+            }
+        }
+        var timer = setTimeout(stopImageLoading, 1000);
+        image.onload = function() {
+            clearTimeout(timer); 
+            imageLoaded = true; 
+            console.log("Obraz został załadowany.");
+        };
+    
+        //zmiana zakładek
+        function openPage(pageName, elmnt, color) {
+            var i, tabcontent, tablinks;
+            tabcontent = document.getElementsByClassName("tabcontent");
+            for (i = 0; i < tabcontent.length; i++) {
+                tabcontent[i].style.display = "none";
+            }
+            tablinks = document.getElementsByClassName("tablink");
+            for (i = 0; i < tablinks.length; i++) {
+                tablinks[i].style.backgroundColor = "";
+                tablinks[i].className = tablinks[i].className.replace(" active", "");
+            }
+            document.getElementById(pageName).style.display = "block";
+            elmnt.style.backgroundColor = color;
+    
+            elmnt.className += " active";
+        }
+        
+        window.onload = function () {
+            var defaultOpen = document.getElementById("defaultOpen");
+            if (defaultOpen) {
+                defaultOpen.click();
+            }
+        };
+    </script>
+    
+    <script src="{{ url_for('static', filename='scripts/podwozie.js') }}"></script>
+    <script src="{{ url_for('static', filename='scripts/manipulator.js') }}"></script>
 
 {% endblock %}
