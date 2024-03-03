@@ -105,11 +105,12 @@ li:hover {
     width: 30px;
 }
 
-#connection-icon {
+#connection-icon, #mobile-connection-icon {
     width: 14px;
     height: 14px;
     margin-left: 4px;
 }
+
 #map {
     width: 800px;
     height: 400px;

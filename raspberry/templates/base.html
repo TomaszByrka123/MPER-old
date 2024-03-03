@@ -28,8 +28,20 @@
     {% block content %}{% endblock %}
 
     <div id="sidebar-right" class="sidebar">
-        <div class="sidebar-header">BATTERY 98% <br> CONNECTION <img src="../static/icons/delete.png" id="connection-icon"/></div>
+        <div class="sidebar-header">
+            BATTERY 98% <br> 
+            CONNECTION <img src="../static/icons/delete.png" id="connection-icon" alt="NO"/><br>
+            MOBILE APP <img src="../static/icons/delete.png" id="mobile-connection-icon" alt="NO"/>
+            <script>
+                console.log(connectionStatus, mobileConnectionStatus);
+                if (connectionStatus) connectIcon.src = '../static/icons/yes.png';
+                else connectIcon.src = '../static/icons/delete.png';
+                if (mobileConnectionStatus) mobileConnectIcon.src = '../static/icons/yes.png';
+                else mobileConnectIcon.src = '../static/icons/delete.png';
+            </script>
+        </div>
         <script>var connectIcon = document.getElementById('connection-icon');</script>
+        <script>var mobileConnectIcon = document.getElementById('mobile-connection-icon');</script>
         <div class="message-list" id="lista">
             <div class="message-list-item">Strona jest załadowana</div>
             <script>

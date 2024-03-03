@@ -9,49 +9,6 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600&display=swap" rel="stylesheet">
   </head>
   <div id="content">
-    
-    <script>
-        //odczytywanie obrazu z serwera przez websocket żeby nie trzeba było odświeżać strony przy każdej zmianie obrazu
-        //TU MA BYC ODBIERANIE DANYCH Z KAMER OD WEBRCT
-        function loadDoc() {
-            var xhttp = new XMLHttpRequest();
-            xhttp.onreadystatechange = function() {
-              if (this.readyState == 4 && this.status == 200) {
-              document.getElementById("image").innerHTML = this.responseText;
-              }
-            };
-            xhttp.open("GET", "http://192.168.8.125/photos/obraz.jpg", true);
-            xhttp.send();
-          }
-
-        loadDoc()
-
-    </script>
-
-
-
-
-    <script>
-    const worker = new Worker('../static/js/backgroundWorker.js');
-    worker.postMessage('start');
-
-    //wyslanie do webworkera
-    worker.postMessage({ action: 'setVariable', data: 'Nowa wartość' });
-
-    //odbior od webworkera
-    worker.addEventListener('message', function(event) {
-        if (event.data.action === 'variableChanged') {
-            const updatedValue = event.data.data;
-            //PRACA NA DANYCH
-        }
-    });
-
-    //przed zamknieciem panelu
-    window.addEventListener('beforeunload', function() {
-        worker.terminate();
-    });
-
-    </script>
     <h1>STRONA GŁÓWNA</h1>
   </div>
 {% endblock %}

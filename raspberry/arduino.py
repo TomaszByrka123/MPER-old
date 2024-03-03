@@ -1,3 +1,4 @@
+#!/new_env/bin/python
 #OBSŁUGA KOMUNIKACJI Z ARDUINO PRZEZ UART
 
 import serial
@@ -61,22 +62,20 @@ def on_detction(data):
     print("detect: ", data)
 
 
-try:
-    podwozie = Arduino('/dev/ttyACM0')
-    podwozie.set_callback(on_detction)
-    podwozie.start_get_data()
-    while True:
-        input_str = input("Podaj x i y: ")
-        numbers = input_str.split()
 
-        x = int(numbers[0])
-        y = int(numbers[1])
-        
-        podwozie.send_data([x, y])
-except:
-    print("nie udalo się połączyć z arduino")
+#ACM0
+podwozie = Arduino('/dev/ttyUSB0')
+podwozie.set_callback(on_detction)
+podwozie.start_get_data()
+while True:
+    input_str = input("Podaj x i y i z: ")
+    numbers = input_str.split()
+
+    x = int(numbers[0])
+    y = int(numbers[1])
+    z = int(numbers[2])
+    podwozie.send_data([x, y, z])
 """
-
 
 
 

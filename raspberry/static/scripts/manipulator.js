@@ -76,7 +76,7 @@ function send_data_manipulator() {
     //console.log(dataManipulator)
     socket.emit('joystickManipulator', dataManipulator);
 }
-setInterval(send_data_manipulator, 50);
+setInterval(send_data_manipulator, 400);
 
 
 
