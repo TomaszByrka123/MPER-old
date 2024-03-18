@@ -175,8 +175,27 @@ li:hover {
     vertical-align: middle;
 }
 
-
-
+#homeManipButton {
+    font-family: 'Poppins', sans-serif;
+    margin-top: 14px;
+    background-color:sandybrown;
+    font-size: 20px;
+    border-radius: 8px;
+    padding: 10px;
+    border-width: 1px;
+    border-color: azure;
+    border-style: solid;
+    cursor: pointer;
+    left: 300px;
+    bottom: 40px;
+    position: fixed;
+}
+#homeManipButton:hover {
+    background-color: chocolate;
+}
+#homeManipButton.clicked {
+    background-color: rgb(146, 74, 22);
+}
 
 .crush-button {
     font-family: 'Poppins', sans-serif;

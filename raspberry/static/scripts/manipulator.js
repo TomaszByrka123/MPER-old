@@ -185,3 +185,11 @@ function checkPressedButtonsCrush() {
 }
 
 setInterval(checkPressedButtonsCrush, 100);
+
+
+// Powrót do home
+document.getElementById('homeManipButton').addEventListener('click', function() {
+    for (var i = 0; i < dataManipulator.length; i++) dataManipulator[i] = 3;
+    send_data_manipulator();
+    for (var i = 0; i < dataManipulator.length; i++) dataManipulator[i] = 0;
+});

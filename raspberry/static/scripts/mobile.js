@@ -6,8 +6,8 @@ var joy = nipplejs.create({
     size: 500,
 });
 
-let angle_left = 0;
-let angle_right = 0;
+let angle_left = 100;
+let angle_right = 100;
 
 joy.on('move', (event, data) => {
     const angleRadians = data.angle.radian;
@@ -76,6 +76,7 @@ joy.on('end', () => {
 
 function send_data_podwozie() {
     socket.emit('joystickPodwozie', {left: angle_left, right: angle_right});
+    console.log({left: angle_left, right: angle_right})
 }
-
+//i to 
 setInterval(send_data_podwozie, 50);

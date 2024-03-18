@@ -61,11 +61,11 @@ def printPage(message):
 
 
 podwozieThread = None
-podwozieData = [0, 0, 0, 0, 0]
+podwozieData = [100, 100, 0, 0, 0]
 def podwozieThreadFunction():
     def on_detction(data):
-        printPage("detect: ", data)
-
+        pass
+        #print("detect: ", data)
     try:
         podwozie = Arduino('/dev/ttyACM0')
         podwozie.set_callback(on_detction)
@@ -76,6 +76,7 @@ def podwozieThreadFunction():
 
     while True:
         try:
+            #print("wyslano do podwozia: ", podwozieData)
             podwozie.send_data(podwozieData)
         except: pass
         time.sleep(.05)
@@ -85,7 +86,8 @@ manipulatorThread = None
 manipulatorData = [0, 0, 0, 0, 0]
 def manipulatorThreadFunction():
     def on_detction(data):
-        printPage(f"detect: {data}")
+        pass
+        #print(f"detect: {data}")
 
     try:
         manipulator = Arduino('/dev/ttyUSB0')
@@ -142,12 +144,13 @@ def settings(new_settings=None):
 
 @socketio.on('joystickPodwozie')
 def joystickPodwozie(data):
-    print(data)
-    podwozieData[0] = data['left'] 
-    podwozieData[1] = data['right']
     podwozieData[2] = actualSettings[0]
     podwozieData[3] = actualSettings[1]
     podwozieData[4] = actualSettings[2]
+    podwozieData[0] = data['left'] 
+    podwozieData[1] = data['right']
+
+
 
 @socketio.on('joystickManipulator')
 def joystickManipulator(data):

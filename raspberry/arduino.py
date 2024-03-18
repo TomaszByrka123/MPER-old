@@ -44,7 +44,6 @@ class Arduino:
         try:
             self.data_str = ','.join(map(str, data)) + '\n'
             self.arduino.write(self.data_str.encode())
-            print(f"Wysłano do Arduino: {data}")
             time.sleep(0.1)
         except Exception as e:
             print(f"Błąd wysyłania danych: {str(e)}")

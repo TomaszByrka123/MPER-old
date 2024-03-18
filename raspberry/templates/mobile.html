@@ -14,9 +14,31 @@
     <script src="{{ url_for('static', filename='scripts/nipplejs.min.js') }}"></script>
     <script src="{{ url_for('static', filename='scripts/polaczenie.js') }}"></script>
     <link rel="icon" type="image/x-icon" href="../static/icons/space-car.png">
+    <style>
+        .connectionInfo {
+            font-size: 30px;
+            position: fixed;
+            top: 60;
+            left: 50%;
+            transform: translateX(-50%);
+            text-align: center;
+        }
+        #connection-icon, #mobile-connection-icon {
+            width: 23px;
+            height: 23px;
+            margin-left: 7px;
+        }
+    </style>
 </head>
 <body>
+    <div class="connectionInfo">
+        BATTERY 98% <br> 
+        CONNECTION <img src="../static/icons/delete.png" id="connection-icon" alt="NO"/><br>
+        MOBILE APP <img src="../static/icons/delete.png" id="mobile-connection-icon" alt="NO"/>
+    </div>
     <div id="zone_joystick" style="width: 100%; height: 100%;"></div>
+    <script>var connectIcon = document.getElementById('connection-icon');</script>
+    <script>var mobileConnectIcon = document.getElementById('mobile-connection-icon');</script>
     <script src="{{ url_for('static', filename='scripts/mobile.js') }}"></script>
 </body>
 </html>

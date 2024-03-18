@@ -1,5 +1,7 @@
 var socket = io.connect('http://' + document.domain + ':' + location.port);
 
+var mobileConnection = false;
+
 socket.on('connect', function() {
     console.log('Connected to the server');
     try {
@@ -16,7 +18,7 @@ socket.on('disconnect', function() {
 });
 
 socket.on('status_update', function(data) {
-    console.log('Status update received:', data);
+    //console.log('Status update received:', data);
     if (data.komputer) {
         try {
             connectIcon.src = '../static/icons/yes.png';
@@ -29,10 +31,12 @@ socket.on('status_update', function(data) {
     if (data.mobile) {
         try {
             mobileConnectIcon.src = '../static/icons/yes.png';
+            mobileConnection = true;
         } catch (error) { console.log(error) }
     } else {
         try {
             mobileConnectIcon.src = '../static/icons/delete.png';
+            mobileConnection = false;
         } catch (error) { console.log(error) }
     }
 });

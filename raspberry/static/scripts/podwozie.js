@@ -6,8 +6,8 @@ var joystickPodwozie = nipplejs.create({
     size: 150
 });
 
-let angle_left = 0;
-let angle_right = 0;
+let angle_left = 100;
+let angle_right = 100;
 
 joystickPodwozie.on('move', (event, data) => {
     const angleRadians = data.angle.radian;
@@ -75,8 +75,7 @@ joystickPodwozie.on('end', () => {
 });
 
 function send_data_podwozie() {
-    socket.emit('joystickPodwozie', {left: angle_left, right: angle_right});
+    //console.log(mobileConnection);
+    if (!mobileConnection) socket.emit('joystickPodwozie', {left: angle_left, right: angle_right});
 }
-
 setInterval(send_data_podwozie, 50);
-
