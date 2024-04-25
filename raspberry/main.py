@@ -1,14 +1,29 @@
-#!/venv/bin/python
+#!/venv/bin/python3
 from flask import Flask, render_template, request, jsonify
 from flask_socketio import SocketIO, emit
+import threading
 import time
+import subprocess
 
 from arduino import Arduino
+from lcd import LCD
+
+
+"""
+#plik z kamerą (uruchamianie kamery automatycznie, trzeba usunac jeszze run_camera_mper.service)
+try:
+    subprocess.run(['sudo', 'python3', 'camera_pi.py'], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+except:
+    print("Błąd uruchomienia kamery")
+"""
 
 baterry = 98
 actualSettings = [1, 1, 1]
 pcAppStatus = False
 mobileAppStatus = False
+lcd = LCD(rgb_addr=0x60,col= 16,row = 2)
+lcd.home()
+errorTable = []
 
 app = Flask(__name__)
 socketio = SocketIO(app)
@@ -53,87 +68,74 @@ def add_cache_control(response):
     return response
 """
     
-def printPage(message):
+def printPage(message, code=None):
+    if message not in errorTable: errorTable.append(message)
+    if code is not None: lcd.print_out(str(code))
     print(message)
-    socketio.emit('message', message)
+    try: socketio.emit('message', message)
+    except: pass
 
 
-
-
-podwozieThread = None
 podwozieData = [100, 100, 0, 0, 0]
+podwozieWorking = False
 def podwozieThreadFunction():
+    global podwozieWorking
     def on_detction(data):
         pass
-        #print("detect: ", data)
     try:
         podwozie = Arduino('/dev/ttyACM0')
         podwozie.set_callback(on_detction)
         podwozie.start_get_data()
+        podwozieWorking = True
         printPage("POLACZENIE Z ARDUINO - PODWOZIE UDANE")
     except:
-        printPage("BRAK POŁĄCZENIA Z ARDUINO - PODWOZIE")
+        printPage("BRAK POŁĄCZENIA Z ARDUINO - PODWOZIE", "A")
 
-    while True:
-        try:
-            #print("wyslano do podwozia: ", podwozieData)
-            podwozie.send_data(podwozieData)
-        except: pass
-        time.sleep(.05)
+    if podwozieWorking:
+        while True:
+            try: podwozie.send_data(podwozieData)
+            except: pass
+            time.sleep(.1)
 
-
-manipulatorThread = None
 manipulatorData = [0, 0, 0, 0, 0]
+manipulatorWorking = False
 def manipulatorThreadFunction():
+    global manipulatorWorking
     def on_detction(data):
         pass
-        #print(f"detect: {data}")
-
     try:
         manipulator = Arduino('/dev/ttyUSB0')
         manipulator.set_callback(on_detction)
         manipulator.start_get_data()
+        manipulatorWorking = True
         printPage("POLACZENIE Z ARDUINO - MANIPULATOR UDANE")
-    except:
-        printPage("BRAK POŁĄCZENIA Z ARDUINO - MANIPULATOR")
+    except: printPage("BRAK POŁĄCZENIA Z ARDUINO - MANIPULATOR", "B")
 
-    while True:
-        try:
-            manipulator.send_data(manipulatorData)
-        except: pass
-        time.sleep(.5)
-      
+    if manipulatorWorking:
+        while True:
+            try:
+                manipulator.send_data(manipulatorData)
+            except: pass
+            time.sleep(.5)
 
 @socketio.on('connect')
 def connect():
     global pcAppStatus, mobileAppStatus
-    global podwozieThread
-    if podwozieThread is None:
-        podwozieThread = socketio.start_background_task(target=podwozieThreadFunction)
+    
+    for error in errorTable: printPage(error)
 
-    global manipulatorThread
-    if manipulatorThread is None:
-        manipulatorThread = socketio.start_background_task(target=manipulatorThreadFunction)
-
-    if request.headers.get('User-Agent').find('Mobile') != -1:
-        mobileAppStatus = True
-        print('Client mobile connected')
-    else:
-        pcAppStatus = True
-        print('Client pc connected')
+    if request.headers.get('User-Agent').find('Mobile') != -1: mobileAppStatus = True
+    else: pcAppStatus = True
     emit('status_update', {'komputer': pcAppStatus, 'mobile': mobileAppStatus}, broadcast=True)
 
+  
 @socketio.on('disconnect')
 def disconnect():
     global mobileAppStatus, pcAppStatus
-    if request.headers.get('User-Agent').find('Mobile') != -1:
-        mobileAppStatus = False
-        print('Client mobile disconnected')
-    else:
-        pcAppStatus = False
-        print('Client pc disconnected')
+    if request.headers.get('User-Agent').find('Mobile') != -1: mobileAppStatus = False
+    else: pcAppStatus = False
     emit('status_update', {'komputer': pcAppStatus, 'mobile': mobileAppStatus}, broadcast=True)
-      
+
 @socketio.on('settings')
 def settings(new_settings=None):
     global actualSettings
@@ -161,5 +163,12 @@ def joystickManipulator(data):
     manipulatorData[4] = data[4]
 
 if __name__ == '__main__':
-    socketio.run(app, port=8080, debug=True, host='0.0.0.0')
+    
+    podwozieThread = threading.Thread(target=podwozieThreadFunction)
+    podwozieThread.start()
 
+    manipulatorThread = threading.Thread(target=manipulatorThreadFunction)
+    manipulatorThread.start()
+
+    socketio.run(app, port=8080, debug=True, allow_unsafe_werkzeug=True, host='0.0.0.0')
+    

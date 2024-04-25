@@ -11,14 +11,13 @@ socket.on('connect', function() {
 
 socket.on('disconnect', function() {
     console.log("disconnected to server")
-
     try {
         connectIcon.src = '../static/icons/delete.png';
     } catch (error) { console.log(error); }
 });
 
 socket.on('status_update', function(data) {
-    //console.log('Status update received:', data);
+    console.log('Status update received:', data);
     if (data.komputer) {
         try {
             connectIcon.src = '../static/icons/yes.png';

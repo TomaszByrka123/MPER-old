@@ -78,4 +78,4 @@ function send_data_podwozie() {
     //console.log(mobileConnection);
     if (!mobileConnection) socket.emit('joystickPodwozie', {left: angle_left, right: angle_right});
 }
-setInterval(send_data_podwozie, 50);
+setInterval(send_data_podwozie, 400);

@@ -63,7 +63,7 @@ def on_detction(data):
 
 
 #ACM0
-podwozie = Arduino('/dev/ttyUSB0')
+podwozie = Arduino('/dev/ttyACM0')
 podwozie.set_callback(on_detction)
 podwozie.start_get_data()
 while True:
@@ -75,7 +75,6 @@ while True:
     z = int(numbers[2])
     podwozie.send_data([x, y, z])
 """
-
 
 
 """
